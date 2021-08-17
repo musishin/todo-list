@@ -50,10 +50,15 @@ export default function createInterface() {
     mainCatCont.setAttribute('id', 'main-cat-cont');
     projectCont.setAttribute('id', 'project-cont');
     allCat.classList.add('main-cats');
+    allCat.setAttribute('id', 'all-cat');
     todayCat.classList.add('main-cats');
+    todayCat.setAttribute('id', 'today-cat');
     tomCat.classList.add('main-cats');
+    tomCat.setAttribute('id', 'tom-cat');
     weekCat.classList.add('main-cats');
+    weekCat.setAttribute('id', 'week-cat');
     monthCat.classList.add('main-cats');
+    monthCat.setAttribute('id', 'month-cat');
     projectTitle.setAttribute('id', 'project-title');
 
     return bodyCont;
