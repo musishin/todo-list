@@ -14,6 +14,20 @@ export default function createInterface() {
     const monthCat = document.createElement('div');
     const projectCont = document.createElement('div');
     const projectTitle = document.createElement('div');
+    const projectTitleBtnCont = document.createElement('div');
+    const addProjectBtn = document.createElement('div');
+    const newProjectInput = document.createElement('input');
+    const newProjBtn = document.createElement('button');
+
+    title.innerHTML = 'Things to Do';
+    allCat.innerHTML = 'All Things';
+    todayCat.innerHTML = 'Today';
+    tomCat.innerHTML = 'Tomorrow';
+    weekCat.innerHTML = 'This Week';
+    monthCat.innerHTML = 'This Month';
+    projectTitleBtnCont.innerHTML = 'Projects';
+    addProjectBtn.innerHTML = '+';
+    newProjBtn.innerHTML = 'Create';
 
     bodyCont.appendChild(titleBar);
     bodyCont.appendChild(sideTodoCont);
@@ -23,22 +37,23 @@ export default function createInterface() {
 
     sideTodoCont.appendChild(sideBar);
     sideTodoCont.appendChild(todoCont);
+
     sideBar.appendChild(mainCatCont);
     sideBar.appendChild(projectCont);
+
     mainCatCont.appendChild(allCat);
     mainCatCont.appendChild(todayCat);
     mainCatCont.appendChild(tomCat);
     mainCatCont.appendChild(weekCat);
     mainCatCont.appendChild(monthCat);
+
     projectCont.appendChild(projectTitle);
 
-    title.innerHTML = 'Things to Do';
-    allCat.innerHTML = 'All Things';
-    todayCat.innerHTML = 'Today';
-    tomCat.innerHTML = 'Tomorrow';
-    weekCat.innerHTML = 'This Week';
-    monthCat.innerHTML = 'This Month';
-    projectTitle.innerHTML = 'Projects';
+    projectTitle.appendChild(projectTitleBtnCont);
+    projectTitle.appendChild(newProjectInput);
+    projectTitle.appendChild(newProjBtn);
+
+    projectTitleBtnCont.appendChild(addProjectBtn);
 
     bodyCont.setAttribute('id', 'body-cont');
     titleBar.setAttribute('id', 'title-bar');
@@ -60,6 +75,15 @@ export default function createInterface() {
     monthCat.classList.add('main-cats');
     monthCat.setAttribute('id', 'month-cat');
     projectTitle.setAttribute('id', 'project-title');
+    projectTitleBtnCont.setAttribute('id', 'project-title-btn-cont');
+    addProjectBtn.setAttribute('id', 'add-proj-btn');
+    newProjectInput.setAttribute('id', 'new-project-input');
+    newProjectInput.setAttribute('placeholder', 'Enter new project name');
+    newProjectInput.setAttribute('type', 'text');
+    newProjectInput.classList.add('hide');
+    newProjBtn.setAttribute('type', 'button');
+    newProjBtn.setAttribute('id', 'new-proj-btn');
+    newProjBtn.classList.add('hide');
 
     return bodyCont;
 }

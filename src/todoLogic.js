@@ -1,4 +1,5 @@
 let todoList = [];
+let projectList = [];
 
 // Factory function for creating todo items.
 const Todo = (title, description, dueDate, priority, project) => {
@@ -21,4 +22,8 @@ const createTodo = (title, description, dueDate, priority, project) => {
     todoList.push(newTodo);
 };
 
-export { todoList, createTodo };
+const addProjectToList = (name) => {
+    projectList.push(name);
+};
+
+export { todoList, projectList, createTodo, addProjectToList };

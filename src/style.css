@@ -105,8 +105,14 @@ body {
 #project-cont {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    width: calc(100% - 30px);
     margin: 30px 0 0 30px;
+    font-family: 'Galatea-Thin';
+}
+
+#add-proj-btn {
+    margin-right: 26px;
+    cursor: pointer;
 }
 
 .main-cats {
@@ -122,15 +128,60 @@ body {
 
 #project-title {
     font-family: 'Galatea-Light';
-    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.main-cat-selected {
+#project-title-btn-cont {
+    font-family: 'Galatea-Light';
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#new-project-input {
+    width: calc(100% - 30px);
+    height: 30px;
+    margin-top: 15px;
+    border: none;
+    background: rgb(245, 245, 245);
+    padding-left: 5px;
+    font-family: 'Galatea-Thin';
+}
+
+#new-project-input:focus {
+    outline-width: 0;
+}
+
+#new-proj-div {
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: fit-content;
+}
+
+#new-proj-div:hover {
     font-family: 'Galatea';
 }
 
-.main-cat-unselected {
-    font-family: 'Galatea-Thin';
+#new-proj-btn {
+    border: none;
+    background: cornflowerblue;
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.selected {
+    font-family: 'Galatea';
 }
 
 
@@ -149,20 +200,26 @@ body {
 
 .todo-item-cont {
     width: 800px;
-    min-height: 47px;
+    height: auto;
     background: rgb(245, 245, 245);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px 0 30px;
+    flex-direction: column;
     margin-bottom: 10px;
-    position: relative;
 }
 
 .todo-item-cont:hover {
     width: 810px;
     box-shadow: 1px 2px 6px rgb(32, 33, 36, .28);
     transition: 0.1s ease-out;
+}
+
+#todo-item-top-cont {
+    height: 47px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px 0 30px;
+    position: relative;
 }
 
 #right-cont {
@@ -206,4 +263,12 @@ body {
 
 .low-priority {
     background: darkseagreen;
+}
+
+#item-edit-cont {
+    height: 80px;
+}
+
+.hide-edit-cont {
+    display: none;
 }
