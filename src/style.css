@@ -44,21 +44,26 @@ body {
 /* Title Bar */
 
 #title-bar {
-    min-height: 60px;
+    min-height: 55px;
     display: flex;
     justify-content: space-between;
     background: cornflowerblue;
 }
 
 #title {
-    font-family: 'Galatea';
-    font-size: 27px;
+    font-family: 'Galatea-Thin';
+    font-size: 25px;
     color: white;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 25px;
+    margin-left: 30px;
+}
+
+#app-logo {
+    height: 25px;
+    margin-right: 10px;
 }
 
 #auth-cont {
@@ -68,7 +73,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 25px;
+    margin-right: 30px;
 }
 
 

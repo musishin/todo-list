@@ -1,7 +1,7 @@
 import './style.css';
 import createInterface from './basicInterface';
 import { todoList, projectList, createTodo, addProjectToList } from './todoLogic';
-import { changeCatDOM, renderTodoItem, renderProject } from './renderDOM';
+import { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm } from './renderDOM';
 
 document.getElementById('main-cont').appendChild(createInterface());
 
@@ -52,9 +52,7 @@ const setListeners = (() => {
 
     // Listener for add new project button.
     document.getElementById('add-proj-btn').addEventListener('click', () => {
-        document.getElementById('new-project-input').classList.toggle('hide');
-        document.getElementById('new-proj-btn').classList.toggle('hide');
-        document.getElementById('add-proj-btn').classList.toggle('rotated');
+        toggleNewProjForm();
     });
 
     // Listener for create project button
@@ -62,9 +60,7 @@ const setListeners = (() => {
         if(document.getElementById('new-project-input').value !== '') {
             addProjectToList(document.getElementById('new-project-input').value);
             renderProject(projectList.length - 1);
-            document.getElementById('new-project-input').value = '';
-            document.getElementById('new-project-input').classList.add('hide');
-            document.getElementById('new-proj-btn').classList.add('hide');
+            toggleNewProjForm();
         }
     });
 })();

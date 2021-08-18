@@ -1,7 +1,11 @@
+import logo from './images/to-do-list_white.png';
+
 export default function createInterface() {
     const bodyCont = document.createElement('div');
     const titleBar = document.createElement('div');
     const title = document.createElement('div');
+    const titleTxt = document.createElement('div');
+    const appLogo = document.createElement('img');
     const authCont = document.createElement('div');
     const sideTodoCont = document.createElement('div');
     const sideBar = document.createElement('div');
@@ -19,7 +23,7 @@ export default function createInterface() {
     const newProjectInput = document.createElement('input');
     const newProjBtn = document.createElement('button');
 
-    title.innerHTML = 'Things to Do';
+    titleTxt.innerHTML = 'Things to Do';
     allCat.innerHTML = 'All Things';
     todayCat.innerHTML = 'Today';
     tomCat.innerHTML = 'Tomorrow';
@@ -34,6 +38,9 @@ export default function createInterface() {
 
     titleBar.appendChild(title);
     titleBar.appendChild(authCont);
+
+    title.appendChild(appLogo);
+    title.appendChild(titleTxt);
 
     sideTodoCont.appendChild(sideBar);
     sideTodoCont.appendChild(todoCont);
@@ -58,6 +65,8 @@ export default function createInterface() {
     bodyCont.setAttribute('id', 'body-cont');
     titleBar.setAttribute('id', 'title-bar');
     title.setAttribute('id', 'title');
+    appLogo.setAttribute('id', 'app-logo');
+    appLogo.src = logo;
     authCont.setAttribute('id', 'auth-cont');
     sideTodoCont.setAttribute('id', 'side-todo-cont');
     sideBar.setAttribute('id', 'sidebar');

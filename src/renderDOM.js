@@ -107,4 +107,12 @@ const clearList = () => {
     }
 };
 
-export { changeCatDOM, renderTodoItem, renderProject };
+// Toggle appropriate classes for new project input field and buttons.
+const toggleNewProjForm = () => {
+    document.getElementById('new-project-input').value = '';
+    document.getElementById('new-project-input').classList.toggle('hide');
+    document.getElementById('new-proj-btn').classList.toggle('hide');
+    document.getElementById('add-proj-btn').classList.toggle('rotated');
+}
+
+export { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm };
