@@ -113,6 +113,9 @@ body {
 #add-proj-btn {
     margin-right: 26px;
     cursor: pointer;
+    font-size: 28px;
+    transition: 0.3s;
+    font-weight: bold;
 }
 
 .main-cats {
@@ -174,6 +177,7 @@ body {
     color: white;
     margin-top: 10px;
     cursor: pointer;
+    font-family: 'Galatea-Light';
 }
 
 .hide {
@@ -182,6 +186,10 @@ body {
 
 .selected {
     font-family: 'Galatea';
+}
+
+.rotated {
+    transform: rotate(45deg);
 }
 
 

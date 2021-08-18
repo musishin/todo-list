@@ -54,6 +54,7 @@ const setListeners = (() => {
     document.getElementById('add-proj-btn').addEventListener('click', () => {
         document.getElementById('new-project-input').classList.toggle('hide');
         document.getElementById('new-proj-btn').classList.toggle('hide');
+        document.getElementById('add-proj-btn').classList.toggle('rotated');
     });
 
     // Listener for create project button
