@@ -1,19 +1,24 @@
 let todoList = [];
 let projectList = [];
+let currentProjCatSelected = 'all-cat';
+let currentTodoSelected;
 
 // Factory function for creating todo items.
-const Todo = (title, description, dueDate, priority, project) => {
+const Todo = (title, dueDate, priority, project) => {
     let complete = false;
     const getTitle = () => title;
-    const getDesc = () => description;
     const getDue = () => dueDate;
     const getPriority = () => priority;
     const getProject = () => project;
     const isComplete = () => complete;
 
-    // add setters as well.
+    const setTitle = (newTitle) => title = newTitle;
+    const setDue = (newDue) => dueDate = newDue;
+    const setPriority = (newPriority) => priority = newPriority;
+    const setProject = (newProject) => project = newProject;
+    const setComplete = (status) => complete = status;
 
-    return { getTitle, getDesc, getDue, getPriority, getProject, isComplete }
+    return { getTitle, getDue, getPriority, getProject, isComplete, setTitle, setDue, setPriority, setProject, setComplete }
 };
 
 // Creates todo item and pushes it into todoList array.
@@ -22,8 +27,34 @@ const createTodo = (title, description, dueDate, priority, project) => {
     todoList.push(newTodo);
 };
 
+// Takes given project name and pushes it into projectList array.
 const addProjectToList = (name) => {
     projectList.push(name);
 };
 
-export { todoList, projectList, createTodo, addProjectToList };
+const setCurrentProject = (name) => {
+    currentProjCatSelected = name;
+};
+
+const getCurrentProject = () => {
+    return currentProjCatSelected;
+}
+
+const setCurrentTodo = (count) => {
+    currentTodoSelected = count;
+};
+
+const getCurrentTodo = () => {
+    return currentTodoSelected;
+}
+
+const checkAndAddProj = (value) => {
+    if(!projectList.includes(value)) {
+        addProjectToList(value);
+        return 'no';
+    } else {
+        return 'yes';
+    }
+};
+
+export { todoList, projectList, createTodo, addProjectToList, setCurrentProject, getCurrentProject, setCurrentTodo, getCurrentTodo, checkAndAddProj };
