@@ -1,4 +1,5 @@
 import { todoList, projectList, createTodo, setCurrentProject, getCurrentProject, addProjectToList, setCurrentTodo, getCurrentTodo, checkAndAddProj } from "./todoLogic";
+import { isToday, isTomorrow, isThisWeek, isThisMonth } from 'date-fns';
 
 // Renders a todo item with the info of the todo and appends it to the todo item container.
 const renderTodoItem = (count) => {
@@ -11,11 +12,16 @@ const renderTodoItem = (count) => {
     const editBtn = document.createElement('div');
     const deleteBtn = document.createElement('div');
     const priorityCont = document.createElement('div');
+    const checkCont = document.createElement('div');
+
+    titleCont.innerHTML = todoList[count].getTitle();
+    dueDateCont.innerHTML = todoList[count].getDue();
 
     todoItemCont.appendChild(todoItemTopCont);
     todoItemCont.appendChild(itemEditCont);
     todoItemTopCont.appendChild(titleCont);
     todoItemTopCont.appendChild(rightCont);
+    titleCont.appendChild(checkCont);
     rightCont.appendChild(dueDateCont);
     rightCont.appendChild(editBtn);
     rightCont.appendChild(deleteBtn);
@@ -31,6 +37,9 @@ const renderTodoItem = (count) => {
     editBtn.classList.add('item-buttons');
     deleteBtn.classList.add('item-buttons');
     priorityCont.setAttribute('id', 'priority-cont');
+    checkCont.setAttribute('id', 'check-cont');
+    checkCont.classList.add('unchecked');
+    titleCont.setAttribute('id', 'item-title-cont');
 
     if(todoList[count].getPriority() === 'High') {
         priorityCont.classList.add('high-priority');
@@ -63,8 +72,17 @@ const renderTodoItem = (count) => {
         todoList.splice(count, 1);
     });
 
-    titleCont.innerHTML = todoList[count].getTitle();
-    dueDateCont.innerHTML = todoList[count].getDue();
+    checkCont.addEventListener('click', () => {
+        checkCont.classList.toggle('unchecked');
+        checkCont.classList.toggle('checked');
+        if(checkCont.classList.contains('checked')) {
+            todoList[count].setComplete(true);
+        }
+        else {
+            todoList[count].setComplete(false);
+        }
+        console.log(todoList[count].isComplete());
+    });
 
     document.getElementById('todo-cont').appendChild(todoItemCont);
 };
@@ -181,12 +199,12 @@ const renderEditForm = () => {
     mediumOption.innerHTML = 'Medium';
     lowOption.innerHTML = 'Low';
 
-    editTitleField.setAttribute('id', 'edit-title-field');
+    editTitleField.classList.add('edit-title-field');
     editTitleField.setAttribute('placeholder', 'Edit todo title');
     editDateField.setAttribute('id', 'edit-date-field');
     editDateField.setAttribute('type', 'date');
     editPriorityField.setAttribute('id', 'edit-priority-field');
-    editProjectField.setAttribute('id', 'edit-task-project-field');
+    editProjectField.classList.add('edit-task-project-field');
     editProjectField.setAttribute('placeholder', 'Edit todo project');
     submitBtn.setAttribute('id', 'edit-task-submit-btn');
     highOption.setAttribute('value', 'High');
@@ -222,7 +240,7 @@ const renderEditForm = () => {
     return editCont;
 };
 
-// changeCatDOM(), unselectCats(), and unselectProjs() all make necessary DOM changes when a category or project is selected.
+// changeCatDOM(), unselectCats(), clearList(), refreshList(), and unselectProjs() all make necessary DOM changes when a category or project is selected.
 
 const changeCatDOM = (category) => {
     unselectCats();
@@ -262,11 +280,42 @@ const refreshList = () => {
         if(getCurrentProject() === 'all-cat') {
             renderTodoItem(count);
         }
+        else if(getCurrentProject() === 'today-cat' || getCurrentProject() === 'tom-cat' || getCurrentProject() === 'week-cat' || getCurrentProject() === 'month-cat') {
+            renderTodosByDate(getCurrentProject(), count);
+        }
         else if(todoList[count].getProject() === getCurrentProject()) {
             renderTodoItem(count);
         }
     }
     renderCreateNewTask();
+};
+
+const renderTodosByDate = (category, count) => {
+    console.log(category);
+    if(category === 'today-cat') {
+        let date = new Date(todoList[count].getDue() + ' 00:00');
+        if(isToday(date)) {
+            renderTodoItem(count);
+        }
+    }
+    else if(category === 'tom-cat') {
+        let date = new Date(todoList[count].getDue() + ' 00:00');
+        if(isTomorrow(date)) {
+            renderTodoItem(count);
+        }
+    }
+    else if(category === 'week-cat') {
+        let date = new Date(todoList[count].getDue() + ' 00:00');
+        if(isThisWeek(date)) {
+            renderTodoItem(count);
+        }
+    }
+    else if(category === 'month-cat') {
+        let date = new Date(todoList[count].getDue() + ' 00:00');
+        if(isThisMonth(date)) {
+            renderTodoItem(count);
+        }
+    }
 };
 
 // Toggle appropriate classes for new project input field and buttons.
@@ -275,6 +324,6 @@ const toggleNewProjForm = () => {
     document.getElementById('new-project-input').classList.toggle('hide');
     document.getElementById('new-proj-btn').classList.toggle('hide');
     document.getElementById('add-proj-btn').classList.toggle('rotated');
-}
+};
 
-export { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm, renderCreateNewTask, renderListHeader };
+export { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm, renderCreateNewTask, renderListHeader, refreshList };

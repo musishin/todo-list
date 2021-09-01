@@ -7,6 +7,9 @@ export default function createInterface() {
     const titleTxt = document.createElement('div');
     const appLogo = document.createElement('img');
     const authCont = document.createElement('div');
+    const userImg = document.createElement('img');
+    const signInBtn = document.createElement('button');
+    const signOutBtn = document.createElement('button');
     const sideTodoCont = document.createElement('div');
     const sideBar = document.createElement('div');
     const todoCont = document.createElement('div');
@@ -32,12 +35,18 @@ export default function createInterface() {
     projectTitleBtnCont.innerHTML = 'Projects';
     addProjectBtn.innerHTML = '+';
     newProjBtn.innerHTML = 'Create';
+    signInBtn.innerHTML = 'Sign In';
+    signOutBtn.innerHTML = 'Sign Out';
 
     bodyCont.appendChild(titleBar);
     bodyCont.appendChild(sideTodoCont);
 
     titleBar.appendChild(title);
     titleBar.appendChild(authCont);
+
+    authCont.appendChild(userImg);
+    authCont.appendChild(signInBtn);
+    authCont.appendChild(signOutBtn);
 
     title.appendChild(appLogo);
     title.appendChild(titleTxt);
@@ -68,6 +77,11 @@ export default function createInterface() {
     appLogo.setAttribute('id', 'app-logo');
     appLogo.src = logo;
     authCont.setAttribute('id', 'auth-cont');
+    userImg.setAttribute('id', 'user-img');
+    signInBtn.classList.add('sign-btns');
+    signInBtn.setAttribute('id', 'sign-in-btn');
+    signOutBtn.classList.add('sign-btns');
+    signOutBtn.setAttribute('id', 'sign-out-btn');
     sideTodoCont.setAttribute('id', 'side-todo-cont');
     sideBar.setAttribute('id', 'sidebar');
     todoCont.setAttribute('id', 'todo-cont');

@@ -1,7 +1,8 @@
 import './style.css';
 import createInterface from './basicInterface';
 import { todoList, projectList, createTodo, addProjectToList } from './todoLogic';
-import { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm, renderCreateNewTask, renderListHeader } from './renderDOM';
+import { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm, renderCreateNewTask, renderListHeader, refreshList } from './renderDOM';
+import { googleSignIn, googleSignOut } from './firebaseFunctions';
 
 document.getElementById('main-cont').appendChild(createInterface());
 
@@ -12,31 +13,23 @@ const setListeners = (() => {
     // Listeners for categories.
     document.getElementById('all-cat').addEventListener('click', () => {
         changeCatDOM('all-cat');
-        renderListHeader();
-        for(count = 0; count < todoList.length; count++) {
-            renderTodoItem(count);
-        }
-        renderCreateNewTask();
+        refreshList();
     });
     document.getElementById('today-cat').addEventListener('click', () => {
         changeCatDOM('today-cat');
-        renderListHeader();
-        renderCreateNewTask();
+        refreshList();
     });
     document.getElementById('tom-cat').addEventListener('click', () => {
         changeCatDOM('tom-cat');
-        renderListHeader();
-        renderCreateNewTask();
+        refreshList();
     });
     document.getElementById('week-cat').addEventListener('click', () => {
         changeCatDOM('week-cat');
-        renderListHeader();
-        renderCreateNewTask();
+        refreshList();
     });
     document.getElementById('month-cat').addEventListener('click', () => {
         changeCatDOM('month-cat');
-        renderListHeader();
-        renderCreateNewTask();
+        refreshList();
     });
 
     // Listener for add new project button.
@@ -52,12 +45,17 @@ const setListeners = (() => {
             toggleNewProjForm();
         }
     });
+
+    // Listener for sign in/out buttons
+    document.getElementById('sign-in-btn').addEventListener('click', googleSignIn);
+    document.getElementById('sign-out-btn').addEventListener('click', googleSignOut);
 })();
 
 // Initial render of all todo items and projects when first loading page.
 const initialTodoItemRender = (() => {
     let count = 0;
     renderListHeader();
+    //createTodo('Hello', '2021-08-18', 'Low', 'Everyday');
     for(count = 0; count < todoList.length; count++) {
         renderTodoItem(count);
     }

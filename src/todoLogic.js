@@ -22,8 +22,8 @@ const Todo = (title, dueDate, priority, project) => {
 };
 
 // Creates todo item and pushes it into todoList array.
-const createTodo = (title, description, dueDate, priority, project) => {
-    let newTodo = Todo(title, description, dueDate, priority, project);
+const createTodo = (title, dueDate, priority, project) => {
+    let newTodo = Todo(title, dueDate, priority, project);
     todoList.push(newTodo);
 };
 
