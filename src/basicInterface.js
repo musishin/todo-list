@@ -44,9 +44,9 @@ export default function createInterface() {
     titleBar.appendChild(title);
     titleBar.appendChild(authCont);
 
-    authCont.appendChild(userImg);
     authCont.appendChild(signInBtn);
     authCont.appendChild(signOutBtn);
+    authCont.appendChild(userImg);
 
     title.appendChild(appLogo);
     title.appendChild(titleTxt);

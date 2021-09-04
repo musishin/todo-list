@@ -1,6 +1,10 @@
+import { copyDbToArray, setCurrentProject } from './todoLogic';
+import { refreshList } from './renderDOM';
+
 let currentUser;
 let currentUserID;
 let currentUserRef;
+let database = firebase.database();
 
 // Google Authentication
 
@@ -20,23 +24,53 @@ const googleSignOut = () => {
     });
 };
 
-
-
-// Firebase Realtime Database Application
+// Firebase Authentication Listener
 firebase.auth().onAuthStateChanged(function(user) {
 
-    if (user) {
+    if(user) {
         currentUser = user;
         currentUserID = user.uid;
         currentUserRef = database.ref().child(currentUserID);
         let imgUrl = user.photoURL;
         document.getElementById('user-img').src = imgUrl;
+
+        // Render existing todos for the user.
+        document.getElementById('all-cat').classList.add('selected');
+        setCurrentProject('all-cat');
+        currentUserRef.child('todos').once('value', (snap) => {
+            if(snap.exists()) {
+                let dbList = Object.values(snap.val());
+                copyDbToArray(dbList);
+                refreshList();
+            }
+            else {
+                refreshList();
+            }
+        });
     }
     else {
-        //document.getElementById('user-img').src = '';
-        //signBtn.classList.toggle('display-none');
         currentUser = user;
     }
 });
 
-export { googleSignIn, googleSignOut }
+// Adds new todos to database.
+function addTodoToDb(title, dueDate, priority, project, complete, ) {
+
+    if(currentUser) {
+        currentUserRef.child('todos').child(title + '@' + dueDate).set({
+            title: title,
+            dueDate: dueDate,
+            priority: priority,
+            project: project,
+            complete: complete
+        });
+    } else {
+        console.log("No user!");
+    }
+}
+
+const getCurrentUserRef = () => {
+    return currentUserRef;
+};
+
+export { googleSignIn, googleSignOut, addTodoToDb, getCurrentUserRef }

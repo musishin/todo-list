@@ -1,7 +1,7 @@
 import './style.css';
 import createInterface from './basicInterface';
-import { todoList, projectList, createTodo, addProjectToList } from './todoLogic';
-import { changeCatDOM, renderTodoItem, renderProject, toggleNewProjForm, renderCreateNewTask, renderListHeader, refreshList } from './renderDOM';
+import { projectList, addProjectToList } from './todoLogic';
+import { changeCatDOM, renderProject, toggleNewProjForm, refreshList } from './renderDOM';
 import { googleSignIn, googleSignOut } from './firebaseFunctions';
 
 document.getElementById('main-cont').appendChild(createInterface());
@@ -49,19 +49,4 @@ const setListeners = (() => {
     // Listener for sign in/out buttons
     document.getElementById('sign-in-btn').addEventListener('click', googleSignIn);
     document.getElementById('sign-out-btn').addEventListener('click', googleSignOut);
-})();
-
-// Initial render of all todo items and projects when first loading page.
-const initialTodoItemRender = (() => {
-    let count = 0;
-    renderListHeader();
-    //createTodo('Hello', '2021-08-18', 'Low', 'Everyday');
-    for(count = 0; count < todoList.length; count++) {
-        renderTodoItem(count);
-    }
-    renderCreateNewTask();
-    document.getElementById('all-cat').classList.add('selected');
-    for(count = 0; count < projectList.length; count++) {
-        renderProject(count);
-    }
 })();

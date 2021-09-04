@@ -52,9 +52,8 @@ const renderTodoItem = (count) => {
     editBtn.addEventListener('click', () => {
         const editConts = document.getElementsByClassName('item-edit-cont');
         let showState = '';
-        let counter = 0;
         if(itemEditCont.classList.contains('hide-edit-cont')) { showState = 'hidden'; }
-        for(counter = 0; counter < editConts.length; counter++) {
+        for(let counter = 0; counter < editConts.length; counter++) {
             if(!editConts[counter].classList.contains('hide-edit-cont')) {
                 editConts[counter].classList.add('hide-edit-cont');
             }
@@ -260,8 +259,7 @@ const unselectCats = () => {
 
 const unselectProjs = () => {
     const projects = document.querySelectorAll('div.new-proj-ID');
-    let count;
-    for(count = 0; count < projects.length; count++) {
+    for(let count = 0; count < projects.length; count++) {
         projects[count].classList.remove('selected');
     }
 };
@@ -273,10 +271,9 @@ const clearList = () => {
 };
 
 const refreshList = () => {
-    let count = 0;
     clearList();
     renderListHeader();
-    for(count = 0; count < todoList.length; count++) {
+    for(let count = 0; count < todoList.length; count++) {
         if(getCurrentProject() === 'all-cat') {
             renderTodoItem(count);
         }
