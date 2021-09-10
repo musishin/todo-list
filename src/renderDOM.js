@@ -1,5 +1,6 @@
 import { todoList, projectList, createTodo, setCurrentProject, getCurrentProject, addProjectToList, setCurrentTodo, getCurrentTodo, checkAndAddProj } from "./todoLogic";
 import { isToday, isTomorrow, isThisWeek, isThisMonth } from 'date-fns';
+import { editTodoDB } from "./firebaseFunctions";
 
 // Renders a todo item with the info of the todo and appends it to the todo item container.
 const renderTodoItem = (count) => {
@@ -222,13 +223,14 @@ const renderEditForm = () => {
     editPriorityField.appendChild(lowOption);
 
     submitBtn.addEventListener('click', () => {
-        let todo = todoList[getCurrentTodo()];
+        /*let todo = todoList[getCurrentTodo()];
         todo.setTitle(editTitleField.value);
         todo.setDue(editDateField.value);
         todo.setPriority(editPriorityField.value);
         todo.setProject(editProjectField.value);
         console.log(todo.getPriority());
-        console.log(todo.getProject());
+        console.log(todo.getProject());*/
+        editTodoDB(editTitleField.value, editDateField.value, editPriorityField.value, editProjectField.value);
 
         if(checkAndAddProj(editProjectField.value) === 'no') {
             renderProject(projectList.length - 1);

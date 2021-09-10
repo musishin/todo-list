@@ -1,4 +1,4 @@
-import { copyDbToArray, setCurrentProject } from './todoLogic';
+import { copyDbToArray, setCurrentProject, todoList, clearTodoListArray, getCurrentTodo, createTodo } from './todoLogic';
 import { refreshList } from './renderDOM';
 
 let currentUser;
@@ -49,12 +49,14 @@ firebase.auth().onAuthStateChanged(function(user) {
         });
     }
     else {
+        todoList.length = 0;
         currentUser = user;
+        refreshList();
     }
 });
 
 // Adds new todos to database.
-function addTodoToDb(title, dueDate, priority, project, complete, ) {
+const addTodoToDb = (title, dueDate, priority, project, complete) => {
 
     if(currentUser) {
         currentUserRef.child('todos').child(title + '@' + dueDate).set({
@@ -67,10 +69,43 @@ function addTodoToDb(title, dueDate, priority, project, complete, ) {
     } else {
         console.log("No user!");
     }
-}
+};
+
+// Makes todo edit changes to database.
+const editTodoDB = (title, dueDate, priority, project) => {
+    let newTitle = title;
+    let newDue = dueDate;
+    let newPriority = priority;
+    let newProject = project;
+    if(newTitle === "") {
+        newTitle = todoList[getCurrentTodo()].getTitle();
+    }
+    if(newDue === "") {
+        newDue = todoList[getCurrentTodo()].getDue();
+    }
+    if(newPriority === "" || newPriority === "Priority") {
+        newPriority = todoList[getCurrentTodo()].getPriority();
+    }
+    if(newProject === "") {
+        newProject = todoList[getCurrentTodo()].getProject();
+    }
+    currentUserRef.child('todos').child(todoList[getCurrentTodo()].getTitle() + '@' + todoList[getCurrentTodo()].getDue()).remove();
+    createTodo(newTitle, newDue, newPriority, newProject);
+    currentUserRef.child('todos').once('value', (snap) => {
+        if(snap.exists()) {
+            clearTodoListArray();
+            let dbList = Object.values(snap.val());
+            copyDbToArray(dbList);
+            refreshList();
+        } else {
+            refreshList();
+            console.log("snap error!");
+        }
+    });
+};
 
 const getCurrentUserRef = () => {
     return currentUserRef;
 };
 
-export { googleSignIn, googleSignOut, addTodoToDb, getCurrentUserRef }
+export { googleSignIn, googleSignOut, addTodoToDb, editTodoDB, getCurrentUserRef }
