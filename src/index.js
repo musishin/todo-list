@@ -2,7 +2,7 @@ import './style.css';
 import createInterface from './basicInterface';
 import { projectList, addProjectToList } from './todoLogic';
 import { changeCatDOM, renderProject, toggleNewProjForm, refreshList } from './renderDOM';
-import { googleSignIn, googleSignOut } from './firebaseFunctions';
+import { googleSignIn, googleSignOut, addProjectToDB } from './firebaseFunctions';
 
 document.getElementById('main-cont').appendChild(createInterface());
 
@@ -41,6 +41,7 @@ const setListeners = (() => {
     document.getElementById('new-proj-btn').addEventListener('click', () => {
         if(document.getElementById('new-project-input').value !== '') {
             addProjectToList(document.getElementById('new-project-input').value);
+            addProjectToDB(document.getElementById('new-project-input').value);
             renderProject(projectList.length - 1);
             toggleNewProjForm();
         }

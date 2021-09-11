@@ -1,6 +1,8 @@
-import { todoList, projectList, createTodo, setCurrentProject, getCurrentProject, addProjectToList, setCurrentTodo, getCurrentTodo, checkAndAddProj } from "./todoLogic";
+import { todoList, projectList, createTodo, setCurrentProject, getCurrentProject, addProjectToList, setCurrentTodo, checkAndAddProj } from "./todoLogic";
 import { isToday, isTomorrow, isThisWeek, isThisMonth } from 'date-fns';
-import { editTodoDB } from "./firebaseFunctions";
+import { editTodoDB, deleteTodoDB, resetList, addProjectToDB } from "./firebaseFunctions";
+import editImg from './images/edit.png';
+import deleteImg from './images/trash.png';
 
 // Renders a todo item with the info of the todo and appends it to the todo item container.
 const renderTodoItem = (count) => {
@@ -10,8 +12,8 @@ const renderTodoItem = (count) => {
     const titleCont = document.createElement('div');
     const rightCont = document.createElement('div');
     const dueDateCont = document.createElement('div');
-    const editBtn = document.createElement('div');
-    const deleteBtn = document.createElement('div');
+    const editBtn = document.createElement('img');
+    const deleteBtn = document.createElement('img');
     const priorityCont = document.createElement('div');
     const checkCont = document.createElement('div');
 
@@ -36,11 +38,20 @@ const renderTodoItem = (count) => {
     itemEditCont.classList.add('hide-edit-cont');
     rightCont.setAttribute('id', 'right-cont');
     editBtn.classList.add('item-buttons');
+    editBtn.src = editImg;
     deleteBtn.classList.add('item-buttons');
+    deleteBtn.src = deleteImg;
     priorityCont.setAttribute('id', 'priority-cont');
     checkCont.setAttribute('id', 'check-cont');
-    checkCont.classList.add('unchecked');
     titleCont.setAttribute('id', 'item-title-cont');
+
+    // Makes sure checkbox is marked if todo is set as complete.
+    if(todoList[count].isComplete() === true) {
+        checkCont.classList.add('checked');
+    }
+    else {
+        checkCont.classList.add('unchecked');
+    }
 
     if(todoList[count].getPriority() === 'High') {
         priorityCont.classList.add('high-priority');
@@ -68,8 +79,8 @@ const renderTodoItem = (count) => {
     });
 
     deleteBtn.addEventListener('click', () => {
-        document.getElementById('todo-cont').removeChild(todoItemCont);
-        todoList.splice(count, 1);
+        deleteTodoDB(count);
+        resetList();
     });
 
     checkCont.addEventListener('click', () => {
@@ -169,6 +180,7 @@ const renderCreateNewTask = () => {
         refreshList();
         if(!projectList.includes(newProjectField.value)) {
             addProjectToList(newProjectField.value);
+            addProjectToDB(newProjectField.value);
             renderProject(projectList.length - 1);
         }
     });
@@ -223,19 +235,11 @@ const renderEditForm = () => {
     editPriorityField.appendChild(lowOption);
 
     submitBtn.addEventListener('click', () => {
-        /*let todo = todoList[getCurrentTodo()];
-        todo.setTitle(editTitleField.value);
-        todo.setDue(editDateField.value);
-        todo.setPriority(editPriorityField.value);
-        todo.setProject(editProjectField.value);
-        console.log(todo.getPriority());
-        console.log(todo.getProject());*/
         editTodoDB(editTitleField.value, editDateField.value, editPriorityField.value, editProjectField.value);
-
         if(checkAndAddProj(editProjectField.value) === 'no') {
             renderProject(projectList.length - 1);
         }
-        refreshList();
+        resetList();
     });
 
     return editCont;
@@ -290,7 +294,6 @@ const refreshList = () => {
 };
 
 const renderTodosByDate = (category, count) => {
-    console.log(category);
     if(category === 'today-cat') {
         let date = new Date(todoList[count].getDue() + ' 00:00');
         if(isToday(date)) {

@@ -1,4 +1,4 @@
-import { addTodoToDb, editTodoDB } from './firebaseFunctions';
+import { addTodoToDb } from './firebaseFunctions';
 
 let todoList = [];
 let projectList = [];
@@ -70,4 +70,10 @@ const copyDbToArray = (dbList) => {
     }
 };
 
-export { todoList, projectList, createTodo, addProjectToList, setCurrentProject, getCurrentProject, setCurrentTodo, getCurrentTodo, checkAndAddProj, copyDbToArray, clearTodoListArray };
+const copyDbToProjects = (dbList) => {
+    for(let arrayIndex = 0; arrayIndex < dbList.length; arrayIndex++) {
+        projectList.push(dbList[arrayIndex].title);
+    }
+};
+
+export { todoList, projectList, createTodo, addProjectToList, setCurrentProject, getCurrentProject, setCurrentTodo, getCurrentTodo, checkAndAddProj, copyDbToArray, copyDbToProjects, clearTodoListArray };
